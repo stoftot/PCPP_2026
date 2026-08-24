@@ -2,3 +2,8 @@
 obj/
 bin/
 *.user
+build/
+.gradle/
+gradle/
+gradle*
+gradle*/
