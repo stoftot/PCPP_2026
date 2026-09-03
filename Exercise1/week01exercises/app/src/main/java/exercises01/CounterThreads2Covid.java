@@ -2,6 +2,8 @@
 // raup@itu.dk * 2021-08-27
 package exercises01;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class CounterThreads2Covid {
 
     long counter = 0;
@@ -30,9 +32,14 @@ public class CounterThreads2Covid {
 
 
     public class Turnstile extends Thread {
+        private static final ReentrantLock LOCK = new ReentrantLock();
+
         public void run() {
             for (int i = 0; i < PEOPLE; i++) {
-                counter++;
+                LOCK.lock();
+                if (counter < 15_000)
+                    counter++;
+                LOCK.unlock();
             }
         }
     }

@@ -2,6 +2,8 @@
 // sestoft@itu.dk * 2015-10-29
 package exercises02;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TestLocking0 {
     public static void main(String[] args) {
         final int count = 1_000_000;
@@ -22,16 +24,21 @@ public class TestLocking0 {
 
 class Mystery {
     private static double sum = 0;
+    private static ReentrantLock lock = new ReentrantLock();
 
     public static synchronized void addStatic(double x) {
+        lock.lock();
         sum += x;
+        lock.unlock();
     }
 
     public synchronized void addInstance(double x) {
+        lock.lock();
         sum += x;
+        lock.unlock();
     }
 
-    public static synchronized double sum() {
+    public static double sum() {
         return sum;
     }
 }
