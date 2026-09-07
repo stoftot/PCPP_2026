@@ -11,7 +11,7 @@ public class TestStringSet {
   StringSet s;
 
   public TestStringSet() throws InterruptedException {
-    s = new StringSet();
+    s = new StringSet(); // (1)
 
     Thread t1 = new Thread(() -> {
       s.findOrAdd("PCPP");
@@ -20,8 +20,8 @@ public class TestStringSet {
       s.find("PCPP");
     });
 
-    t1.start();
-    t2.start();
+    t1.start(); // (2)
+    t2.start(); // (3)
   }
 
 
@@ -32,14 +32,14 @@ public class TestStringSet {
     private final List<String> list = new ArrayList<String>();
 
     public synchronized int findOrAdd(String s) {
-      int ret = list.indexOf(s);
-      if (ret == -1) {
-        list.add(s);
+      int ret = list.indexOf(s); // (1)
+      if (ret == -1) {           // (2)
+        list.add(s);             // (3)
       }
       return ret;
     }
 
-    public int find(String s) {
+    public synchronized int find(String s) {
       return list.indexOf(s);
     }
   }
