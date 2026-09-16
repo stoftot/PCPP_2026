@@ -12,7 +12,6 @@ public class Person {
             id_counter++;
             id = id_counter;
         }
-
     }
 
     public Person(int id) {
@@ -28,6 +27,7 @@ public class Person {
     }
     public synchronized void setName(String name) {
         this.name = name;
+    }
 
     public synchronized void UpdateWhereYouLive(String address, int zip) {
         this.address = address;
@@ -37,7 +37,7 @@ public class Person {
     public synchronized int getZip() {
         return zip;
     }
-    public synchronized long getId() {
+    public long getId() {
         return id;
     }
     public synchronized String getName() {
@@ -46,6 +46,4 @@ public class Person {
     public synchronized String getAddress() {
         return address;
     }
-
-
 }
