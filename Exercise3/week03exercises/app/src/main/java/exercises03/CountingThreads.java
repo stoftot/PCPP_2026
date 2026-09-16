@@ -4,7 +4,7 @@
 package exercises03;
 
 public class CountingThreads {
-  int count;
+  volatile int count;
 
   public CountingThreads() throws InterruptedException {
     count = 0;

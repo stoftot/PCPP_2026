@@ -39,7 +39,7 @@ public class TestStringSet {
       return ret;
     }
 
-    public int find(String s) {
+    public synchronized int find(String s) {
       return list.indexOf(s);
     }
   }
