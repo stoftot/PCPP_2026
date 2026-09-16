@@ -47,33 +47,27 @@ m(start(t2), join(t1))
 m(join(t1), join(t2))
 m(joint(t2), 4)
 
+(t1(2),t1(3))
+(t2(2), t2(3))
+
+With the program order rule the set is always the same, even though the actual execution may not be. 
+
 ## Exercise 1.3 Thread start and termination rules 
 Thread start rule states that the first call to start() happens before the first action in the thread 
 Thread termination rule states that the last action of the thread happens before join()
 
-With this, one possible execution of the program could be the set below, this is 
-not the only way the program could execute but it is one possibility. 
+With this, one possible execution of the program is the set below, this is 
+not the only way the program could execute but what is defined with these rules.
 
-
-main thread total order: (init(CountingThreads), init(count))
-
-m(init(count), m(1))
-m(1, start(t1))
-m(start(t1), start(t2))
 
 // Thread one execution
 m(start(t1), t1(2))
-m(t1(2), t1(3)) // this line may not be definable only using the thread start and termination rules 
 m(t1(3), join(t1))
 
 // Thread two execution 
 
 m(start(t2), t2(2))
-m(t2(2), t2(3)) // this line may not be definable only using the thread start and termination rules 
 m(t2(3), join(t2))
-
-m(join(t1), join(t2))
-m(join(t2), 4)
 
 ## Exercise 1.4  
 
@@ -89,7 +83,15 @@ S = {
 For example in the execution below there is no happens before between the read and writes of t1 and t2
 so t1 does its read then t2 does the same before t1 writes. So there is a conflict. 
 
-So because t1(2) and t2(2) are not in the happens before order and are conflicting since they are accessing the shared variable.
+There are the following conflicting actions, and they are not defined in the happens beofre so there is a datarace. 
+
+t1(2), t2(3)
+t2(2), t1(3)
+t1(3), t2(3)
+t2(3), t1(3)
+
+
+
 m(init(CountingThreads), init(count))
 
 m(init(count), start(t1))
@@ -159,43 +161,49 @@ and have t1(read) -> t2(read)
 # Exercise 2 
  
 ## Exercise 2.1
-They are not properly synchronized since the find() method is not synchonized only the findOrAdd()
-
-There is is a data race because find is not performing lock(StringSet.this) we have the happens before relations 
-HB t1/po = {
-    t1(1) → t1(2),
-    t1(2) → t1(3),
-    t1(3) → t1(4)
+public TestStringSet() throws InterruptedException {
+    s = new StringSet(); //inti(s)
+    
+    Thread t1 = new Thread(() -> {
+      s.findOrAdd("PCPP");
+    });
+    Thread t2 = new Thread(() -> {
+      s.find("PCPP");
+    });
+    
+    t1.start(); //start(t1)
+    t2.start(); //start(t2)
 }
 
-and:
-
-HB t2/po = {
-    // only t2(1)
+public class StringSet {
+    private final List<String> list = new ArrayList<String>();
+    
+    public synchronized int findOrAdd(String s) {
+      int ret = list.indexOf(s); //1
+      if (ret == -1) { 
+        list.add(s); //2
+      }
+      return ret;
+    }
+    
+    public int find(String s) {
+      return list.indexOf(s); //3
+    }
 }
 
-For the main thread:
 
-HB m/po = {
-    m(1) → m(2),
-    m(2) → m(3)
-}
+$HB{po}^{m}$ = {m(init(s)) -> m(start(t1)) -> m(start(t2))}
+$HB{po}^{t2}$ = {t1(1) -> t1(2)}
+$HB{po}^{t2}$ = {t2(3)}
+$HB{init}$ = {m(start(t1)) -> t1(1), m(start(t2)) -> t2(3)}
 
-HB = {
-    m(1) → m(2),
-    m(2) → m(3),
+The conflicting acctions are the following
+t1(2), t2(3)
+Since they access the same non volatile variable, and at least one of them is a write
 
-    t1(1) → t1(2),
-    t1(2) → t1(3),
-    t1(3) → t1(4),
+A corretley synchronized program is defined by none of its executions containing a data race, and there exsists a data race between two actions a and b in an execution of actions a and b are conflictin and are not ordered by happens before
 
-    m(2) → t1(1),
-    m(3) → t2(1)
-}
-
-Since there is no t2(1) -> t1(3) or t1(3) -> t1(1)
-the conflicting pairs are not in the happens before relation so a data race is present
-This by definition prevents the program from being synchronized 
+t1(2),t2(3) are conflicting and are not ordered by happens berfore, therefore the program is not correctley synchronized
 
 ## Exercise 2.2 
 Adding synchronized we now have proper synchronization since we get the ordering of the locking 
@@ -212,7 +220,7 @@ This means we can make a total order transitive closure with proper sychronizati
 
 ## Exercise 3.1. Required HB ordering:
 
-The important part is that the main threads write on x must be in happens-before the read on x in the worker thread
+The important part is that the main threads write on x must happen-before the read on x in the worker thread
 This will solve the visibility problem. 
 
 m(3) →HB t1(1)
@@ -224,26 +232,6 @@ t1(1) = read x in while(x == 0)
 
 ## Exercise 3.2. JMM:
 
-HB m/po = {
-    m(1) → m(2),
-    m(2) → m(3),
-    ...
-}
-
-HB start = {
-    m(2) → t1(1)
-}
-
-There is no HB path from m(3) to t1(1):
-
-m(3) HB t1(1)s
-
-nor in the opposite direction:
-
-t1(1) HB m(3)
-
-Thus:
-
-m(3) || t1(1)
-
-The write and read are conflicting accesses with no HB ordering → data race, so the JMM permits t1 to repeatedly read 0 and loop forever.
+$HB{po}^{m}$ = {m(init(x)) -> m(start(t1)) -> m(3) -> (4)}
+$HB{po}^{t1}$ = {t1(1) -> t1(2)}
+$HB_{init}$ = {m(start(t1)) -> t1(1)}
