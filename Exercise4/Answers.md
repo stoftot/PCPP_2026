@@ -2,13 +2,95 @@
 
 ## Exercise 4.1
 
-### Exercise 4.1.1
-### Exercise 4.1.2
-### Exercise 4.1.3
+## 4.1.1
+```java
+package exercises04;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+
+public class BoundedBuffer<T> implements BoundedBufferInteface<T>{
+    private final Semaphore takeSemaphore = new Semaphore(0, true);
+    private final Semaphore insertSemaphore;
+    private final Semaphore mutexSemaphore = new Semaphore(1, true);
+    private final List<T> buffer;
+
+    public BoundedBuffer(int bufferSize){
+        buffer = new ArrayList<>(bufferSize);
+        insertSemaphore = new Semaphore(bufferSize, true);
+    }
+
+
+    @Override
+    public T take() throws Exception {
+        takeSemaphore.acquire();
+        try {
+            mutexSemaphore.acquire();
+        } catch (Exception e) {
+            takeSemaphore.release();
+            throw e;
+        }
+
+        T elem;
+
+        try {
+            elem = buffer.getFirst();
+            buffer.removeFirst();
+        } catch (Exception e){
+            mutexSemaphore.release();
+            takeSemaphore.release();
+            throw e;
+        }
+
+        mutexSemaphore.release();
+        insertSemaphore.release();
+
+        return elem;
+    }
+
+    @Override
+    public void insert(T elem) throws Exception {
+        insertSemaphore.acquire();
+        try {
+            mutexSemaphore.acquire();
+        } catch (Exception e) {
+            insertSemaphore.release();
+            throw  e;
+        }
+
+        try {
+            buffer.add(elem);
+        } catch (Exception e){
+            mutexSemaphore.release();
+            insertSemaphore.release();
+            throw  e;
+        }
+
+        mutexSemaphore.release();
+        takeSemaphore.release();
+    }
+}
+```
+
+## 4.1.2
+- Class state
+	- Is the buffer, which is ensure not to have dataracses by the mutexSemaphore which ensures that only one thread can accses the buffer at a time
+- Escaping
+	- There is no escaping, the only thing the class exposes is the elements of the buffer, not the buffer itself
+- Safe publication
+	- Everything is marked as final, ensuring initialization happens-before publication
+- Immutability
+	- Yes everything is marked as final
+- Mutual exclusion
+	- The buffer is mutable, and we ensure mutual exclusion with the mutexSemaphore
+
+## 4.1.3
+No, since buffer waits for a set amount of threads, for then let all threads execute what they are doing you could not.
 
 ## Exercise 4.2
 
-### Exercise 4.1.1
+### Exercise 4.2.1
 
 ```java 
 
@@ -51,7 +133,7 @@ public class Person {
 
 ```
 
-### Exercise 4.1.2
+### Exercise 4.2.2
 **Class State**
 The state of the class is safe since the fields of the class are only 
 exposed through the synchronized getters. It is not possible to have a data
@@ -79,7 +161,7 @@ The constructor is using the static id_counter which is shared across instances 
 In cases where it is altered it is protected by the lock on Person.class ensuring that there 
 will not be problems on subsequent calls to the constructor.
 
-### Exercise 4.1.3
+### Exercise 4.2.3
 ```java 
 public static void main(String[] args) {
         new Thread(() -> {
@@ -105,7 +187,7 @@ public static void main(String[] args) {
         }).start();
     }
 ```
-### Exercise 4.1.4
+### Exercise 4.2.4
 
 The program above is instatiating different person instances. One output of the program is 
 Thread 3 id 8
