@@ -2,6 +2,8 @@ package exercises04;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 public class BoundedBuffer<T> implements BoundedBufferInteface<T>{

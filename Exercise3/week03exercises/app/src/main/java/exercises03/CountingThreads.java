@@ -1,4 +1,4 @@
-// For week 3 
+// For week 3
 // raup@itu.dk * 2025-09-03
 
 package exercises03;
@@ -18,18 +18,21 @@ public class CountingThreads {
     t1.join();
     t2.join();
 
-    System.out.println("count="+count);
+    System.out.println("Count: " + count);
   }
 
   public class CountingThread extends Thread {
     public void run() {
-      int temp = count;
-      count = temp + 1;
+      synchronized (CountingThreads.this) {
+        int temp = count;
+        count = temp + 1;
+      }
+
     }
   }
 
 
   public static void main(String[] args) throws InterruptedException {
-    new CountingThreads();
+      new CountingThreads();
   }
 }

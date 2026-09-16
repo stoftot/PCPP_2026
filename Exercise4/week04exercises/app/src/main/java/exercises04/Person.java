@@ -1,51 +1,51 @@
 package exercises04;
 
 public class Person {
-    private static int lastID;
-    private static boolean firstPersonCreated = false;
-
+    private static long id_counter = 0;
     private final long id;
     private String name;
     private int zip;
     private String address;
 
     public Person() {
-        id = CreateID(0);
-    }
-
-    public Person(int initialID) {
-        id = CreateID(initialID);
-    }
-
-    private static synchronized long CreateID(int initialID) {
-        if (!firstPersonCreated) {
-            lastID = initialID;
-            firstPersonCreated = true;
-        } else {
-            lastID++;
+        synchronized (Person.class) {
+            id_counter++;
+            id = id_counter;
         }
 
-        return lastID;
     }
+
+    public Person(int id) {
+        synchronized (Person.class) {
+            if (id_counter != 0) {
+                id_counter++;
+                this.id = id_counter;
+            } else {
+                id_counter = id;
+                this.id = id;
+            }
+        }
+    }
+    public synchronized void setName(String name) {
+        this.name = name;
 
     public synchronized void UpdateWhereYouLive(String address, int zip) {
         this.address = address;
         this.zip = zip;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getZip() {
+    public synchronized int getZip() {
         return zip;
     }
-
-    public String getAddress() {
+    public synchronized long getId() {
+        return id;
+    }
+    public synchronized String getName() {
+        return name;
+    }
+    public synchronized String getAddress() {
         return address;
     }
+
+
 }
