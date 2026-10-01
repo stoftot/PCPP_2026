@@ -59,3 +59,38 @@ This is ensured by making the counts field final
 
 Yes since it uses compareAndSet to verify the state before setting it to 0 and returning the value
 
+## 6.1.3
+```java
+@Test
+public void test1(){
+	barrier = new CyclicBarrier(5000+1);
+	for(int i = 0; i <= 4_999; i++){
+		final int p = countFactors(i);
+		new Thread(() -> {
+			try {
+				barrier.await();
+				histogram_parallel.increment(p);
+				barrier.await();
+			} catch (InterruptedException | BrokenBarrierException e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
+
+	for(int i = 0; i <= 4_999; i++){
+	   histogram_sequential.increment(countFactors(i));
+	}
+
+	try {
+		barrier.await();
+		barrier.await();
+	} catch (InterruptedException | BrokenBarrierException e) {
+		e.printStackTrace();
+	}
+
+	for(int i = 0; i < 30; i++){
+		assertEquals(histogram_sequential.getCount(i), histogram_parallel.getCount(i));
+	}
+}
+```
+
