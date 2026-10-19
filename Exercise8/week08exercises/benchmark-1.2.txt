@@ -1,0 +1,6 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T10:08:06+0200
+sqrt                                  1.8 ns       0.31  268435456
+random                               18.8 ns       0.11   16777216

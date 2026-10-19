@@ -1,0 +1,8 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T11:03:13+0200
+quicksort                          7816.6 us      33.64         32
+quicksort parallel imp             3707.5 us     385.08         64
+arrays sort                         976.9 us       3.91        256
+arrays sort                         448.0 us      16.06       1024

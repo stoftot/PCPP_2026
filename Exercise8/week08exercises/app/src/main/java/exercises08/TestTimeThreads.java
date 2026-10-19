@@ -14,20 +14,20 @@ public class TestTimeThreads {
   public static void main(String[] args) {
     SystemInfo();
     final Point myPoint = new Point(42, 39);
-    Mark6('n', "hashCode()", i -> myPoint.hashCode());
-    Mark6('n', "Point creation", 
+    Mark7('n', "hashCode()", i -> myPoint.hashCode());
+    Mark7('n', "Point creation",
           i -> {
             Point p = new Point((int)i, (int)i);
             return p.hashCode();
           });
-    Mark6('n', "Thread's work", 
+    Mark7('n', "Thread's work",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             for (int j=0; j<1000; j++)
               ai.getAndIncrement();
             return ai.doubleValue();
           });
-    Mark6('n', "Thread pltf cre", 
+    Mark7('n', "Thread pltf cre",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             Thread t = Thread.ofPlatform().unstarted(() -> {
@@ -36,7 +36,7 @@ public class TestTimeThreads {
               });
             return t.hashCode();
           });
-    Mark6('n', "Thread pltf cre strt", 
+    Mark7('n', "Thread pltf cre strt",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             Thread t = Thread.ofPlatform().start(() -> {
@@ -45,7 +45,7 @@ public class TestTimeThreads {
             });
             return t.hashCode();
           });
-    Mark6('n', "Thread pltf cre strt join", 
+    Mark7('n', "Thread pltf cre strt join",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             Thread t = Thread.ofPlatform().start(() -> {
@@ -56,7 +56,7 @@ public class TestTimeThreads {
             catch (InterruptedException exn) { }
             return t.hashCode();
           });
-    Mark6('n', "Thread virt cre", 
+    Mark7('n', "Thread virt cre",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             Thread t = Thread.ofVirtual().unstarted(() -> {
@@ -84,7 +84,7 @@ public class TestTimeThreads {
     //         });
     //         return t.hashCode();
     //       });
-    Mark6('n', "Thread virt cre strt join", 
+    Mark7('n', "Thread virt cre strt join",
           i -> {
 	    final AtomicInteger ai = new AtomicInteger(); 
             Thread t = Thread.ofVirtual().start(() -> {
@@ -96,7 +96,7 @@ public class TestTimeThreads {
             return t.hashCode();
           });
     final Object obj = new Object();
-    Mark6('n', "Uncontended lock", 
+    Mark7('n', "Uncontended lock",
           i -> {
             synchronized (obj) {
               return i;

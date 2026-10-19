@@ -1,0 +1,179 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T10:12:02+0200
+hashCode()                          457.4 ns     990.69          2
+hashCode()                          241.0 ns     235.16          4
+hashCode()                          231.7 ns     164.59          8
+hashCode()                          247.1 ns     231.97         16
+hashCode()                          108.8 ns     166.39         32
+hashCode()                           56.7 ns       9.65         64
+hashCode()                           77.4 ns      61.04        128
+hashCode()                           58.8 ns      14.87        256
+hashCode()                           51.8 ns       0.75        512
+hashCode()                           52.8 ns       4.33       1024
+hashCode()                           58.1 ns       4.29       2048
+hashCode()                           58.8 ns       5.80       4096
+hashCode()                           20.3 ns       2.18       8192
+hashCode()                           16.2 ns       3.86      16384
+hashCode()                           12.2 ns       2.65      32768
+hashCode()                           10.7 ns       0.57      65536
+hashCode()                            9.7 ns       1.21     131072
+hashCode()                            9.7 ns       0.77     262144
+hashCode()                            9.2 ns       0.61     524288
+hashCode()                            9.0 ns       1.30    1048576
+hashCode()                            2.7 ns       0.08    2097152
+hashCode()                            2.6 ns       0.08    4194304
+hashCode()                            2.5 ns       0.05    8388608
+hashCode()                            2.5 ns       0.03   16777216
+hashCode()                            2.5 ns       0.02   33554432
+hashCode()                            2.5 ns       0.01   67108864
+hashCode()                            2.5 ns       0.02  134217728
+Point creation                      414.5 ns     672.04          2
+Point creation                      387.9 ns     457.40          4
+Point creation                      294.3 ns     129.40          8
+Point creation                      261.0 ns     123.25         16
+Point creation                      191.3 ns     119.90         32
+Point creation                      171.8 ns     203.58         64
+Point creation                       92.3 ns      52.10        128
+Point creation                       96.6 ns      27.63        256
+Point creation                       99.4 ns       9.97        512
+Point creation                       87.9 ns       7.58       1024
+Point creation                       91.3 ns       5.67       2048
+Point creation                       90.1 ns       8.60       4096
+Point creation                      171.1 ns     214.34       8192
+Point creation                       69.6 ns      31.02      16384
+Point creation                       35.3 ns       0.49      32768
+Point creation                       36.8 ns       2.03      65536
+Point creation                       40.8 ns      12.56     131072
+Point creation                       37.2 ns       2.33     262144
+Point creation                       40.0 ns       6.95     524288
+Point creation                       39.2 ns       3.71    1048576
+Point creation                       38.4 ns       2.50    2097152
+Point creation                       35.5 ns       1.18    4194304
+Point creation                       40.4 ns       8.96    8388608
+Thread's work                     78948.3 ns   76143.19          2
+Thread's work                     32531.1 ns    2797.14          4
+Thread's work                     31885.0 ns    3558.90          8
+Thread's work                     16476.4 ns    9535.19         16
+Thread's work                     11020.0 ns     871.24         32
+Thread's work                      7929.6 ns    4141.70         64
+Thread's work                      5115.6 ns     316.86        128
+Thread's work                      5121.9 ns     196.06        256
+Thread's work                      5017.3 ns      95.40        512
+Thread's work                      4911.5 ns     153.35       1024
+Thread's work                      4897.9 ns     156.15       2048
+Thread's work                      4883.3 ns      85.39       4096
+Thread's work                      4887.8 ns      71.99       8192
+Thread's work                      4831.3 ns      54.18      16384
+Thread's work                      4858.5 ns      43.93      32768
+Thread's work                      4831.3 ns      21.71      65536
+Thread pltf cre                   60174.6 ns  181106.39          2
+Thread pltf cre                    3605.0 ns    2294.34          4
+Thread pltf cre                    3483.1 ns    2025.08          8
+Thread pltf cre                    2547.6 ns     832.76         16
+Thread pltf cre                    3654.8 ns     871.16         32
+Thread pltf cre                    2566.5 ns     633.29         64
+Thread pltf cre                    1351.8 ns     235.40        128
+Thread pltf cre                     669.1 ns     199.72        256
+Thread pltf cre                     468.9 ns      21.29        512
+Thread pltf cre                     425.7 ns      38.80       1024
+Thread pltf cre                     337.8 ns      40.99       2048
+Thread pltf cre                     303.1 ns      52.84       4096
+Thread pltf cre                     228.9 ns       5.74       8192
+Thread pltf cre                     113.7 ns      37.05      16384
+Thread pltf cre                     100.2 ns       7.10      32768
+Thread pltf cre                      98.1 ns       4.68      65536
+Thread pltf cre                      97.7 ns       4.16     131072
+Thread pltf cre                      98.5 ns       1.91     262144
+Thread pltf cre                      99.8 ns       0.95     524288
+Thread pltf cre                     103.2 ns       2.22    1048576
+Thread pltf cre                     105.6 ns      12.92    2097152
+Thread pltf cre                     106.5 ns       4.50    4194304
+Thread pltf cre strt             105583.1 ns  103287.72          2
+Thread pltf cre strt              56343.1 ns   15416.78          4
+Thread pltf cre strt              60730.8 ns    5092.98          8
+Thread pltf cre strt              56884.3 ns    4652.18         16
+Thread pltf cre strt              52911.0 ns    7238.55         32
+Thread pltf cre strt              49051.2 ns    5172.26         64
+Thread pltf cre strt              44779.6 ns    3996.98        128
+Thread pltf cre strt              45409.7 ns    2273.90        256
+Thread pltf cre strt              52306.9 ns    3314.12        512
+Thread pltf cre strt              52163.8 ns    3294.04       1024
+Thread pltf cre strt              55373.9 ns    2667.92       2048
+Thread pltf cre strt              54187.3 ns    3676.64       4096
+Thread pltf cre strt              53688.9 ns    6891.17       8192
+Thread pltf cre strt join        150174.6 ns   81469.10          2
+Thread pltf cre strt join        126548.7 ns   18415.41          4
+Thread pltf cre strt join        104492.0 ns   14308.91          8
+Thread pltf cre strt join         81577.6 ns    8768.50         16
+Thread pltf cre strt join         79372.8 ns    3874.29         32
+Thread pltf cre strt join         85461.6 ns    7955.49         64
+Thread pltf cre strt join         83762.0 ns    6249.90        128
+Thread pltf cre strt join         87542.5 ns    6732.66        256
+Thread pltf cre strt join         81195.0 ns    4451.86        512
+Thread pltf cre strt join         84010.6 ns    3512.96       1024
+Thread pltf cre strt join         70390.2 ns    6741.03       2048
+Thread pltf cre strt join         92876.2 ns    8522.13       4096
+Thread virt cre                  455577.8 ns 1437395.29          2
+Thread virt cre                    1535.3 ns     748.73          4
+Thread virt cre                    1579.4 ns     727.18          8
+Thread virt cre                    1502.8 ns     350.44         16
+Thread virt cre                    2394.6 ns    1103.66         32
+Thread virt cre                    1576.9 ns     505.90         64
+Thread virt cre                    1246.6 ns     251.04        128
+Thread virt cre                     486.4 ns     149.64        256
+Thread virt cre                     293.6 ns      24.31        512
+Thread virt cre                     256.6 ns      17.55       1024
+Thread virt cre                     133.1 ns     104.16       2048
+Thread virt cre                      66.4 ns      15.81       4096
+Thread virt cre                      72.0 ns       9.87       8192
+Thread virt cre                      50.1 ns       5.33      16384
+Thread virt cre                      58.3 ns      22.61      32768
+Thread virt cre                      59.4 ns      12.86      65536
+Thread virt cre                      54.3 ns      12.49     131072
+Thread virt cre                      62.3 ns       9.42     262144
+Thread virt cre                      55.7 ns       4.06     524288
+Thread virt cre                      51.4 ns       2.71    1048576
+Thread virt cre                      47.8 ns       3.18    2097152
+Thread virt cre                      45.9 ns       2.58    4194304
+Thread virt cre                      46.5 ns       2.93    8388608
+Thread virt cre strt join        254153.8 ns  566348.72          2
+Thread virt cre strt join         70030.0 ns   18152.21          4
+Thread virt cre strt join         51573.7 ns   15622.66          8
+Thread virt cre strt join         31621.8 ns    8023.71         16
+Thread virt cre strt join         31458.8 ns    7145.61         32
+Thread virt cre strt join         19790.5 ns    5330.23         64
+Thread virt cre strt join         16406.0 ns    2605.52        128
+Thread virt cre strt join         13506.9 ns    2449.08        256
+Thread virt cre strt join         10686.0 ns     576.22        512
+Thread virt cre strt join         14176.3 ns    5396.31       1024
+Thread virt cre strt join          9723.5 ns    1427.36       2048
+Thread virt cre strt join          9054.9 ns     427.94       4096
+Thread virt cre strt join         10400.9 ns    1408.48       8192
+Thread virt cre strt join         11404.9 ns    1431.05      16384
+Thread virt cre strt join          9742.7 ns    1396.92      32768
+Uncontended lock                   1543.2 ns    4688.19          2
+Uncontended lock                    111.4 ns      38.21          4
+Uncontended lock                    127.6 ns     102.31          8
+Uncontended lock                    155.0 ns     215.85         16
+Uncontended lock                     92.2 ns      21.31         32
+Uncontended lock                     86.0 ns      60.86         64
+Uncontended lock                     36.3 ns      28.84        128
+Uncontended lock                     20.5 ns       1.42        256
+Uncontended lock                     21.0 ns       2.73        512
+Uncontended lock                     46.6 ns      15.36       1024
+Uncontended lock                     35.2 ns       5.61       2048
+Uncontended lock                     23.9 ns       7.84       4096
+Uncontended lock                     18.5 ns       1.23       8192
+Uncontended lock                     18.0 ns       0.11      16384
+Uncontended lock                     20.1 ns       3.16      32768
+Uncontended lock                     21.0 ns       2.43      65536
+Uncontended lock                     20.9 ns       1.42     131072
+Uncontended lock                     20.6 ns       0.24     262144
+Uncontended lock                     20.4 ns       0.30     524288
+Uncontended lock                     20.1 ns       0.32    1048576
+Uncontended lock                     22.3 ns       1.79    2097152
+Uncontended lock                     19.9 ns       0.53    4194304
+Uncontended lock                     20.1 ns       0.79    8388608
+Uncontended lock                     20.9 ns       2.36   16777216

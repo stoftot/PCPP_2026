@@ -16,15 +16,26 @@ import java.util.function.LongToDoubleFunction;
 class Benchmark {
   public static void main(String[] args) {
     SystemInfo();
-    Mark0();
-    Mark1();
-    Mark2();
-    Mark3();
-    Mark4();
-    Mark5();
-    Mark6('n', "multiply", i -> multiply(i));
-    Mark7('n', "multiply", i -> multiply(i));
-    // MathFunctionBenchmarks();
+    //Mark7('n', "sqrt",  i -> Math.sqrt(i & 0xFF));
+    //Mark7('n', "random", _ -> Math.random());
+    //Mark7('n', "sqrt of rand",  i -> Math.sqrt(Math.random()));
+    Mark7('n', "long holder",  i -> {
+      TestTimeVolatile.LongHolder longHolder = new TestTimeVolatile.LongHolder();
+      longHolder.add(i);
+      return longHolder.value(); });
+    Mark7('n', "long holder vol",  i -> {
+      TestTimeVolatile.LongHolder longHolder = new TestTimeVolatile.LongHolder();
+      longHolder.addVolatile(i);
+      return longHolder.valueVolatile(); });
+    // Mark0();
+    // Mark1();
+    // Mark2();
+    // Mark3();
+    // Mark4();
+    // Mark5();
+    // Mark6('n', "multiply", i -> multiply(i));
+    // Mark7('n', "multiply", i -> multiply(i));
+    //MathFunctionBenchmarks();
     // final java.util.Random rnd = new java.util.Random();
     // final int n = 1638400;
     // Mark8('n', "random_index", "", i -> rnd.nextInt(n));

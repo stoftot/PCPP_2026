@@ -22,6 +22,30 @@ class TestTimeSort {
                  assert Quicksort.isSorted(intArray);
                  return intArray[37];
                });
+    Mark8Setup('u', "quicksort parallel imp", "",
+            () -> Quicksort.shuffle(intArray),
+            i -> {
+                try {
+                    Quicksort.quicksortp(intArray);
+                } catch (InterruptedException e) {
+                }
+                assert Quicksort.isSorted(intArray);
+              return intArray[37];
+            });
+    Mark8Setup('u', "arrays sort", "",
+            () -> Quicksort.shuffle(intArray),
+            i -> {
+              Arrays.sort(intArray);
+              assert Quicksort.isSorted(intArray);
+              return intArray[37];
+            });
+    Mark8Setup('u', "arrays sort", "",
+            () -> Quicksort.shuffle(intArray),
+            i -> {
+              Arrays.parallelSort(intArray);
+              assert Quicksort.isSorted(intArray);
+              return intArray[37];
+            });
   }
 
   // ========== Infrastructure code ==========
@@ -98,9 +122,68 @@ class TestTimeSort {
         qsort(arr, i, b);                      
       }                                        
     }
+
+
+    private static void qsortp(int[] arr, int a, int b)
+            throws InterruptedException {
+
+      if (a >= b) {
+        return;
+      }
+
+      int i = a;
+      int j = b;
+      int x = arr[(i + j) / 2];
+
+      do {
+        while (arr[i] < x) i++;
+        while (arr[j] > x) j--;
+
+        if (i <= j) {
+          swap(arr, i, j);
+          i++;
+          j--;
+        }
+      } while (i <= j);
+
+      if (j-a <= 50) {
+        qsort(arr, a, j);
+        qsort(arr, i, b);
+      } else {
+
+
+        final int I = i;
+        final int J = j;
+
+        Thread left = Thread.startVirtualThread(() -> {
+          try {
+            qsortp(arr, a, J);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+        });
+
+        Thread right = Thread.startVirtualThread(() -> {
+          try {
+            qsortp(arr, I, b);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+        });
+
+        // Wait for both partitions to finish
+        left.join();
+        right.join();
+      }
+    }
+
     
     public static void quicksort(int[] arr) {
       qsort(arr, 0, arr.length-1);
+      assert isSorted(arr);
+    }
+    public static void quicksortp(int[] arr) throws InterruptedException {
+      qsortp(arr, 0, arr.length-1);
       assert isSorted(arr);
     }
     
