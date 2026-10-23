@@ -51,6 +51,8 @@ exeution time decreases. This could also be due to the JVM having to boot up for
 decreasing the average. 
 
 For virtual threads we see lower creation and lifecycle overhead than the platform threads, which is consistent to what we expect. 
+The start up cost has a bigger impact when you are running with fewer iterations. 
+
 
 ## Exercise 2.2
 

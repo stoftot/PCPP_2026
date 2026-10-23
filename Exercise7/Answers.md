@@ -40,7 +40,7 @@ public void push(T value) {
         Node<T> newHead;
         Node<T> oldHead;
         do {
-            oldHead = top.get();                        //po1
+            oldHead = top.get();                        //po1 <-- this one 
             if(oldHead == null) { return null; }        //po2 <-- branch returning 
             newHead = oldHead.next;                     //po3
         } while (!top.compareAndSet(oldHead,newHead));  //po4 <-- update
@@ -61,6 +61,7 @@ whe the stack opject is in the correct state
 Linearization for pop
 PO4 is the point where pop is completed if the stack is non empty
 PO2 is the point where pop is completed if the stack is empty
+PO1 is the point for getting the value from the queue
 
 
 If two threads execute pop concurrently then the CAS operation ensures that the call to a non empty stack
