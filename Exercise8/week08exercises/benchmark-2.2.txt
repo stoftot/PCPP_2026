@@ -1,0 +1,13 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T10:14:25+0200
+hashCode()                            2.4 ns       0.01  134217728
+Point creation                       36.8 ns       0.13    8388608
+Thread's work                      4951.2 ns     147.13      65536
+Thread pltf cre                     105.7 ns       4.94    4194304
+Thread pltf cre strt              52218.9 ns    2028.96       8192
+Thread pltf cre strt join         73948.0 ns    4432.69       4096
+Thread virt cre                      46.7 ns       2.43    8388608
+Thread virt cre strt join          8683.6 ns     179.52      32768
+Uncontended lock                     19.4 ns       0.11   16777216

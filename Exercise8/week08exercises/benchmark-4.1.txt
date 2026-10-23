@@ -1,0 +1,6 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T11:15:42+0200
+long holder                           2.4 ns       0.02  134217728
+long holder vol                       2.6 ns       0.13  134217728

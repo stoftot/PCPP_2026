@@ -1,0 +1,13 @@
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-19T09:45:42+0200
+pow                                  19.4 ns       0.44   16777216
+exp                                   9.0 ns       0.08   33554432
+log                                  12.6 ns       0.32   33554432
+sin                                  15.0 ns       0.18   16777216
+cos                                  17.2 ns       1.15   16777216
+tan                                  23.7 ns       0.27   16777216
+asin                                 15.0 ns       1.03   33554432
+acos                                 15.0 ns       0.13   33554432
+atan                                 15.5 ns       0.09   16777216

@@ -25,41 +25,50 @@ as with the Fifo program specification x should be the item to be dequeued
 
 ## 7.2.1
 
-```java
+```java 
 public void push(T value) {
-	Node<T> newHead = new Node<T>(value);
-	Node<T> oldHead;
-	do {
-		oldHead      = top.get();
-		newHead.next = oldHead;
-	} while (!top.compareAndSet(oldHead,newHead)); //PU1
+        Node<T> newHead = new Node<T>(value);            //pu1
+        Node<T> oldHead;                                 //pu2         
+        do {
+            oldHead      = top.get();                    //pu3
+            newHead.next = oldHead;                      //pu4
+        } while (!top.compareAndSet(oldHead,newHead));   //pu5 <-- this one 
 
-}
+    }
 
-public T pop() {
-	Node<T> newHead;
-	Node<T> oldHead;
-	do {
-		oldHead = top.get(); //PO1
-		if(oldHead == null) { return null; } //PO2
-		newHead = oldHead.next;
-	} while (!top.compareAndSet(oldHead,newHead)); //PO3
+    public T pop() {
+        Node<T> newHead;
+        Node<T> oldHead;
+        do {
+            oldHead = top.get();                        //po1 <-- this one 
+            if(oldHead == null) { return null; }        //po2 <-- branch returning 
+            newHead = oldHead.next;                     //po3
+        } while (!top.compareAndSet(oldHead,newHead));  //po4 <-- update
 
-	return oldHead.value;
-}
+        return oldHead.value;                           //po5 
+    }
+
 ```
-**Push has one linerization point**
-PU1 -  if its sucssefully executed the element has been pushed to the stack.
-**Correctness:**
-- If two threads execute push concurrentley, then only one of them succeeds in executing PU1, the other fails and repeats the push
-- If a thread executes push after another thread updated top, then PU1 fails and repeates the push 
 
-**Pop has two linerization points,**
-PO1 - if the stack is empty, this determines the evaluation in PO2, and the method will then return null
-PO3 - if sucessfully executed the element has been poped from the stack
-**Correctness:**
-- If two threads execute pop concurrentley, and the stack is not emptey, then PO3 succeeds for only one of them and the other fails and repeats pop
-- If a thread executes pop after another thread updates top then PO3 fails and it restarts the pop
+
+Linearization point for push 
+PU5 this is the point where the compare and set is done and other threads are notified 
+
+If two threads execute push concurrently then the CAS operation ensures that the call when only complete 
+whe the stack opject is in the correct state
+
+
+Linearization for pop
+PO4 is the point where pop is completed if the stack is non empty
+PO2 is the point where pop is completed if the stack is empty
+PO1 is the point for getting the value from the queue
+
+
+If two threads execute pop concurrently then the CAS operation ensures that the call to a non empty stack
+will only update the oldhead when the stack in in the correct state. 
+
+If a thread executes a pop after another thread has popped and set the old head to null then the 
+calling thread will return null at PO3
 
 
 ## 7.2.2
@@ -138,9 +147,9 @@ PO3 - if sucessfully executed the element has been poped from the stack
 
 ## 7.2.4 
 
-No
-Part 2 do, because that only have one linerization point, which is related to pushing to the stack.
-Part 3 dosn't, one of it's linearization points regard popping from an empty list, and the test pops equivilant to the amount of elements in the list.
+Yes they are testing the linearization points. For 7.2.2 we are just interested in the total sum after execution of the threads. 
+And for 7.2.3 we need to check that the stack contains the correct values after concurrent execution and that in the case where there is 
+one element in the list, then one of the threads need return null and one should return the value. 
 
 
 
