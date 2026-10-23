@@ -147,9 +147,9 @@ calling thread will return null at PO3
 
 ## 7.2.4 
 
-Yes they are testing the linearization points. For 7.2.2 we are just interested in the total sum after execution of the threads. 
-And for 7.2.3 we need to check that the stack contains the correct values after concurrent execution and that in the case where there is 
-one element in the list, then one of the threads need return null and one should return the value. 
+No
+Part 2 do, because that only have one linerization point, which is related to pushing to the stack.
+Part 3 dosn't, one of it's linearization points regard popping from an empty list, and the test pops equivilant to the amount of elements in the list.
 
 
 
