@@ -29,77 +29,79 @@ class TestLockFreeStack {
 
     // TODO: 7.2.2 - Test push
 
-    @RepeatedTest(1000)
-    void TestLockFreePush() throws InterruptedException {
-        LockFreeStack<Integer> stack = new LockFreeStack<>();
+    @RepeatedTest(1_000)
+    public void testPush(){
+        int n = 10;
+        int x = 1_000;
+        cyclicBarrier = new CyclicBarrier(n+1);
+        for (int i = 0; i < n; i++){
+            new Thread(() -> {
+                try {
+                    cyclicBarrier.await();
+                    for(int j = 0; j < x; j++){
+                        lockFreeStack.push(j);
+                    }
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (BrokenBarrierException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
 
-        for (int i = 0; i < 10; i++) {
-            Thread t1 = new Thread(() -> {
-                stack.push(1);
-            });
-            Thread t2 = new Thread(() -> {
-                stack.push(1);
-            });
-
-            t1.start(); t2.start(); t1.join(); t2.join();
+        try {
+            cyclicBarrier.await();
+            cyclicBarrier.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (BrokenBarrierException e) {
+            throw new RuntimeException(e);
         }
 
         int sum = 0;
-        var v = stack.pop();
-        while (v != null) {
-            sum += v;
-            v = stack.pop();
+        for (int i = 0; i < (n*x); i++){
+            sum += lockFreeStack.pop();
         }
-        assertEquals(20, sum);
+        assertEquals(sum,  (((x-1) * (x)) / 2) * n);
     }
 
 
 
     // TODO: 7.2.3 - Test pop
-    @RepeatedTest(1000)
-    void TestLockFreePop() throws InterruptedException {
-        LockFreeStack<Integer> stack = new LockFreeStack<>();
+    @RepeatedTest(10)
+    public void popTest(){
+        int n = 1_000;
+        cyclicBarrier = new CyclicBarrier(n+1);
+        AtomicInteger ai_sum = new AtomicInteger();
+        for (int i = 0; i < n; i++){
+            lockFreeStack.push(i);
+            new Thread(() -> {
+                try {
+                    cyclicBarrier.await();
+                    ai_sum.addAndGet(lockFreeStack.pop());
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (BrokenBarrierException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
 
-        for (int i = 0; i < 30; i++) {
-            stack.push(1);
-        }
-        for (int i = 0; i < 10; i++) {
-            Thread t1 = new Thread(stack::pop);
-            Thread t2 = new Thread(stack::pop);
-            t1.start(); t2.start();
-            t1.join(); t2.join();
+        try {
+            cyclicBarrier.await();
+            cyclicBarrier.await();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (BrokenBarrierException e) {
+            throw new RuntimeException(e);
         }
 
-        int sum = 0;
-        var v = stack.pop();
-        while (v != null) {
-            sum += v;
-            v = stack.pop();
-        }
-        assertEquals(10, sum);
+        assertEquals(ai_sum.get(), (n-1) * (n) / 2);
     }
 
     //part 4
-    @RepeatedTest(1000)
-    public void concurrentPopIsFunctionallyCorrect() throws InterruptedException {
-        LockFreeStack<Integer> stack = new LockFreeStack<>();
-        stack.push(1);
-        Set<Integer> results = Collections.synchronizedSet(new HashSet<>());
-
-        Thread thread1 = new Thread(() -> {
-            results.add(stack.pop());
-        });
-
-        Thread thread2 = new Thread(() -> {
-            results.add(stack.pop());
-        });
-
-        thread1.start(); thread2.start(); thread1.join(); thread2.join();
-
-        assertTrue(results.contains(1));
-        assertTrue(results.contains(null));
-    }
-
     @RepeatedTest(10)
     public void popTest_empty(){
         int n = 1_000;
