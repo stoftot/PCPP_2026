@@ -1,0 +1,8 @@
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+> Task :app:run
+class exercises09.LongAdderHistogram    51493.1 ms
+
+BUILD SUCCESSFUL in 52s
+2 actionable tasks: 2 executed

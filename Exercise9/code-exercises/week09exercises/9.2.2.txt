@@ -1,0 +1,8 @@
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+> Task :app:run
+class exercises09.CasHistogram    53401.3 ms
+
+BUILD SUCCESSFUL in 54s
+2 actionable tasks: 2 executed

@@ -1,0 +1,22 @@
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+
+> Task :app:run
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-26T11:39:11+0100
+SyncLongAdder              20        465252.8 us   30331.37          2
+SyncLongArrayAdder         20        297614.8 us    9901.54          2
+SyncLongArrayAdderPadded   20         53126.3 us    2818.29          8
+SyncLongArrayAdderLessPad  20        174168.2 us   16972.69          2
+WrappedAtomicLong          20        290978.4 us   40272.57          2
+MyAtomicLong               20       1329515.6 us  110287.47          2
+ThreadLocalAtomicLong      20         26330.2 us     297.01         16
+LongAdderArray             20        139348.9 us   11499.07          2
+LongAdderArrayPadded       20         34567.5 us    4016.17         16
+WrappedLongAdder           20         29603.7 us    1538.93         16
+
+BUILD SUCCESSFUL in 1m 29s
+2 actionable tasks: 2 executed

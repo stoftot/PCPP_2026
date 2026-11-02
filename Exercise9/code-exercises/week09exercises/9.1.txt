@@ -1,0 +1,37 @@
+OS:   Linux; 6.16.3-76061603-generic; amd64
+JVM:  Oracle Corporation; 24.0.1
+CPU:  null; 8 "cores"
+Date: 2026-10-26T10:24:34+0100
+countSequential                  245699.1 us   16889.90          2
+countParallelPlatf      1        246561.4 us    1757.24          2
+countParallelVirtu      1        246791.8 us    3990.65          2
+countParallelPlatf      2        164339.8 us   19164.66          2
+countParallelVirtu      2        160781.4 us    8087.50          2
+countParallelPlatf      3        120890.0 us   10364.69          4
+countParallelVirtu      3        151671.3 us   43615.12          4
+countParallelPlatf      4        122494.8 us   15119.33          4
+countParallelVirtu      4        138378.4 us   12844.43          2
+countParallelPlatf      5        107095.4 us    3677.85          4
+countParallelVirtu      5        118126.0 us   16971.09          4
+countParallelPlatf      6         97534.3 us    4863.90          4
+countParallelVirtu      6         94833.4 us    9812.44          4
+countParallelPlatf      7         83827.4 us    1234.29          4
+countParallelVirtu      7         89462.5 us    6722.09          4
+countParallelPlatf      8         79097.6 us     508.02          4
+countParallelVirtu      8         81797.9 us    2883.10          4
+countParallelPlatf     16         78189.5 us    2704.58          4
+countParallelVirtu     16         86042.9 us   12490.02          4
+countParallelPlatf     32         75873.5 us    1074.40          4
+countParallelVirtu     32         74803.4 us    1720.55          4
+countParallelPlatf     64         77962.9 us    1070.82          4
+countParallelVirtu     64         71029.6 us     561.16          4
+countParallelPlatf    128        114578.1 us   26958.74          4
+countParallelVirtu    128         84020.3 us   24434.36          4
+countParallelPlatf    256         97303.4 us    7347.50          4
+countParallelVirtu    256         73518.4 us    5406.92          4
+countParallelPlatf    512         99808.6 us    1193.13          4
+countParallelVirtu    512         71416.9 us    1097.52          4
+countParallelPlatf   1024        125204.4 us   12985.32          4
+countParallelVirtu   1024         81107.8 us    8498.27          4
+countParallelPlatf   2048        162911.7 us   32848.99          2
+countParallelVirtu   2048         72347.5 us     633.10          4

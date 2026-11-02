@@ -1,0 +1,28 @@
+> Task :app:compileJava UP-TO-DATE
+> Task :app:processResources NO-SOURCE
+> Task :app:classes UP-TO-DATE
+
+> Task :app:run
+# OS:   Linux; 6.16.3-76061603-generic; amd64
+# JVM:  Oracle Corporation; 24.0.1
+# CPU:  null; 8 "cores"
+# Date: 2026-10-26T10:33:10+0100
+countParallelTask       1        260791.3 us   11461.03          2
+countParallelTask       2        175221.3 us   10750.18          2
+countParallelTask       3        136943.2 us    6715.96          2
+countParallelTask       4        105802.0 us   14344.48          2
+countParallelTask       5         93561.6 us    2834.93          4
+countParallelTask       6         90201.1 us    3319.91          4
+countParallelTask       7         86407.4 us    4357.81          4
+countParallelTask       8         79354.5 us    1670.96          4
+countParallelTask      16         85097.4 us   12445.45          4
+countParallelTask      32         80903.6 us    4042.82          4
+countParallelTask      64         87220.2 us    8421.60          4
+countParallelTask     128        100456.7 us   12850.96          4
+countParallelTask     256         78906.2 us   15335.30          4
+countParallelTask     512         61543.9 us    2783.00          8
+countParallelTask    1024         63207.9 us    2412.43          8
+countParallelTask    2048         79979.9 us    8858.71          4
+
+BUILD SUCCESSFUL in 1m 23s
+2 actionable tasks: 1 executed, 1 up-to-date

@@ -3,17 +3,18 @@
 
 package exercises09;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.LongAdder;
 
 class HistogramPerformance {
   public static void main(String[] args) {
-    // exerciseHistogram(new SynchronizedHistogram(30));
-    // exerciseHistogram(new CasHistogram(30));
-    // exerciseHistogram(new AtomicHistogram(30));
-    // exerciseHistogram(new StripedHistogram(30));
-    // exerciseHistogram(new LongAdderHistogram(30));
+    //exerciseHistogram(new SynchronizedHistogram(30));
+    //exerciseHistogram(new CasHistogram(30));
+    //exerciseHistogram(new AtomicHistogram(30));
+    //exerciseHistogram(new StripedHistogram(30));
+    exerciseHistogram(new LongAdderHistogram(30));
   }
 
   public static void exerciseHistogram(Histogram histogram) {
@@ -86,12 +87,139 @@ class Histogram1 implements Histogram {
 
 // Classes to implement:
 
-// class SynchronizedHistogram implements Histogram { ... }
+class SynchronizedHistogram implements Histogram {
+  private int[] counts;
+  public SynchronizedHistogram(int span) {
+    this.counts = new int[span];
+  }
+  public synchronized void increment(int bin) {
+    counts[bin] = counts[bin] + 1;
+  }
+  public synchronized int getCount(int bin) {
+    return counts[bin];
+  }
+  public synchronized int getSpan() {
+    return counts.length;
+  }
+  public synchronized int getAndClear(int bin) {
+    int result = counts[bin];
+    counts[bin] = 0;
+    return result;
+  }
+}
 
-// class CasHistogram implements Histogram { ... }
+class CasHistogram implements Histogram {
+  private final AtomicInteger[] counts;
 
-// class AtomicHistogram implements Histogram { ... }
+  public CasHistogram(int span) {
+    this.counts = new AtomicInteger[span];
+    Arrays.setAll(this.counts, (var0) -> new AtomicInteger(0));
+  }
 
-// class StripedHistogram implements Histogram { ... }
+  public void increment(int bin) {
+    int old_val;
+    int new_val;
+    do {
+      old_val = this.counts[bin].get();
+      new_val = old_val + 1;
+    } while(!this.counts[bin].compareAndSet(old_val, new_val));
 
-// class LongAdderHistogram implements Histogram { ... }
+  }
+
+  public int getCount(int bin) {
+    return this.counts[bin].get();
+  }
+
+  public int getSpan() {
+    return this.counts.length;
+  }
+
+  public int getAndClear(int bin) {
+    int old_val;
+    do {
+      old_val = this.counts[bin].get();
+    } while(!this.counts[bin].compareAndSet(old_val, 0));
+
+    return old_val;
+  }
+}
+
+
+class AtomicHistogram implements Histogram {
+  private final AtomicIntegerArray counts;
+  public AtomicHistogram(int span) {counts = new AtomicIntegerArray(span); }
+  public void increment(int bin) {
+    counts.getAndIncrement(bin);
+  }
+
+  public int getCount(int bin) {return counts.get(bin);}
+
+  public int getSpan() { return counts.length();}
+
+  public int getAndClear(int bin) {return counts.getAndSet(bin, 0);}
+}
+
+class StripedHistogram implements Histogram {
+  private final AtomicIntegerArray[] counts;
+  private final int stripeCount = 16;
+  public StripedHistogram(int span) {
+    counts = new AtomicIntegerArray[stripeCount];
+    for (int i = 0 ; i < stripeCount ; i++)
+      counts[i] = new AtomicIntegerArray(span);
+  }
+  public void increment(int bin) {
+    int strp = (int)(Thread.currentThread().threadId() % stripeCount);
+    counts[strp].getAndIncrement(bin);
+  }
+
+  public int getCount(int bin) {
+    int sum = 0;
+    for (var strp : counts)
+      sum += strp.get(bin);
+
+    return sum;
+  }
+
+  public int getSpan() {
+    return counts[0].length();
+  }
+
+  public int getAndClear(int bin) {
+    int sum = 0;
+    for (var strp : counts)
+      sum += strp.getAndSet(bin, 0);
+
+    return sum;
+  }
+}
+
+class LongAdderHistogram implements Histogram {
+  private final LongAdder[] counts;
+  public LongAdderHistogram(int span) {
+    counts = new LongAdder[span];
+    for (int i = 0 ; i < span ; i++)
+      counts[i] = new LongAdder();
+  }
+  public void increment(int bin) {
+      counts[bin].increment();
+  }
+
+  public int getCount(int bin) {
+    int sum = 0;
+    for (var strp : counts)
+      sum += strp.intValue();
+
+    return sum;
+  }
+
+  public int getSpan() {
+    return counts.length;
+  }
+
+  public int getAndClear(int bin) {
+    int retr = counts[bin].intValue();
+    counts[bin].reset();
+
+    return retr;
+  }
+}

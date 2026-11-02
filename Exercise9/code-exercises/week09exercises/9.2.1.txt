@@ -1,0 +1,8 @@
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+> Task :app:run
+class exercises09.SynchronizedHistogram    44380.2 ms
+
+BUILD SUCCESSFUL in 46s
+2 actionable tasks: 2 executed

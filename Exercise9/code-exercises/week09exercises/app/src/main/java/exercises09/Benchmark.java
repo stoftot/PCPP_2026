@@ -34,7 +34,7 @@ class Benchmark {
     // GetPseudorandomItems();
     // SortingBenchmarks();
     // SortingScalabilityBenchmarks();
-    // MemoryLatency.MemoryLatencies();
+    MemoryLatency.MemoryLatencies();
     // BubbleSortBenchmarks();
     // BoxingBenchmark(); // For Java run-time data note
     // SimdExamples();
