@@ -17,23 +17,36 @@ public class TestSpellingBee {
   public static void main(String[] args) {
     String filename = "words.txt";
     // 10.2.1:
-    List<String> cleanWords = null; // replace with solution
+    List<String> cleanWords =  readWords(filename)
+            .map(String::toLowerCase)
+            .filter(s -> s.length() >= 4)
+            .filter(s -> s.matches("[a-z]+"))
+            .distinct()
+            .toList();
+
+    System.out.println(cleanWords.size());
 
     System.out.println("Number of clean words " + cleanWords.size());    
     System.out.println("----------------------------------------");    
     // 10.2.4:
-
+    System.out.println(new Puzzle('h', letterSet("chikmnu")).solutions(cleanWords).count());
     System.out.println("----------------------------------------");
     // 10.2.5:
-    List<Puzzle> puzzles = null;  // replace with solution
+    List<Puzzle> puzzles = cleanWords
+            .stream()
+            .map(TestSpellingBee::letterSet)
+            .filter(set -> set.size() == 7)
+            .distinct()
+            .flatMap(M -> M.stream().map(m-> new Puzzle(m, M)))
+            .toList();
 
     System.out.println("Number of puzzles " + puzzles.size());
     System.out.println("----------------------------------------");
     // 10.2.6:
-
+    puzzles.stream().limit(20).forEach(System.out::println);
     System.out.println("----------------------------------------");
     // 10.2.7: Warning: SLOW
-    List<Puzzle> goodPuzzles = null;  // replace with solution
+    List<Puzzle> goodPuzzles = null;
 
     System.out.println("Number of good puzzles " + goodPuzzles.size());
   }
@@ -64,12 +77,12 @@ public class TestSpellingBee {
 
     // 10.2.2:
     public boolean hasSolution(String s) {
-      return true; // replace with solution
+      return W.containsAll(letterSet(s)) && s.contains(""+m);
     }
 
     // 10.2.3:
     public Stream<String> solutions(List<String> cleanWords) {
-      return null; // replace with solution
+      return cleanWords.stream().filter(this::hasSolution);
     }
 
     public String toString() {
