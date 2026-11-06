@@ -68,17 +68,23 @@ They are plausible but a wierd thing that happens is that we see the Tasks are a
 virtual threads. This could be due other things interfeering with the CPU. But in general we would expect the Tasks 
 to run faster than the virtual threads. But we do see platform threads slower than virtual threads which alligns with theory. 
 
+Pc has 8 cores so for ExecutorTasks it also makes sense that we do not see many improvements after 8 cores. 
+
 # Exercise 9.2 
 
 ## Exercise 9.2.1
 class exercises09.Histogram1      53412.6 ms
+class exercises09.SynchronizedHistogram    44380.2 ms
 
 
 ## Exercise 9.2.2
-class exercises09.SynchronizedHistogram    44380.2 ms
+class exercises09.CasHistogram    53401.3 ms
+
+Runs about the same times as Synchronizedhistogram, a bit slower on my machine. 
 
 ## Exercise 9.2.3 
-class exercises09.CasHistogram    53401.3 ms
+class exercises09.AtomicHistogram    56254.1 ms
+
 
 ## Exercise 9.2.4 
 class exercises09.StripedHistogram    56870.0 ms
@@ -111,12 +117,12 @@ LongAdderArrayPadded       20         33408.9 us    1639.97          8
 WrappedLongAdder           20         28179.2 us     590.52         16
 
 
-My pc has 2 threads per core with 8 cores so we are working with 16 threads in total so there could be 
+My pc has 2 threads per core with 4 cores so we are working with 16 threads in total so there could be 
 an issue of the cpu having to wait for a thread to free up since there aren't enough 
 availiable to run 20 threads.
 
 ## Exercise 9.3.2 
-The Padded version is faster since the padding helps to ensure false sharing meaning that the chance of a cache getting 
+The Padded version is faster since the padding helps to prevent false sharing meaning that the chance of a cache getting 
 references they dont need is lowered. This increases the chance that the caches only fetch exactly the address they need 
 decreasing false sharing and increasing performance. 
 
