@@ -12,9 +12,9 @@ class HistogramPerformance {
   public static void main(String[] args) {
     //exerciseHistogram(new SynchronizedHistogram(30));
     //exerciseHistogram(new CasHistogram(30));
-    //exerciseHistogram(new AtomicHistogram(30));
+    exerciseHistogram(new AtomicHistogram(30));
     //exerciseHistogram(new StripedHistogram(30));
-    exerciseHistogram(new LongAdderHistogram(30));
+    //exerciseHistogram(new LongAdderHistogram(30));
   }
 
   public static void exerciseHistogram(Histogram histogram) {
@@ -87,6 +87,8 @@ class Histogram1 implements Histogram {
 
 // Classes to implement:
 
+// Class uses the intrinsic lock so a single lock is used per instance.
+// If we wanted use a single lock for the class we could lock on the class object instead
 class SynchronizedHistogram implements Histogram {
   private int[] counts;
   public SynchronizedHistogram(int span) {
