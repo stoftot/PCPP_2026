@@ -84,6 +84,14 @@ List<String> cleanWords = readWords(filename)
 Number of clean words without duplicates 73419
 ## 10.1.7
 ```java
+public static boolean isPalindrome(String s) {
+    for(int i = 0; i < s.length() / 2; i++) {
+      if (s.charAt(i) != s.charAt(s.length() - 1 - i))
+        return false;
+    }
+    return true;
+  }
+
 cleanWords.stream()
             .filter(TestWordStream::isPalindrome)
             .forEach(System.out::println);
